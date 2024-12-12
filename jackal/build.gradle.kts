@@ -1,7 +1,10 @@
+import com.google.protobuf.gradle.id
+
 plugins {
     signing
     `java-library`
     `maven-publish`
+    id("com.google.protobuf") version "0.9.4"
     kotlin("jvm") version "2.0.21"
 }
 
@@ -18,6 +21,11 @@ repositories {
 }
 
 dependencies {
+    implementation("io.grpc:grpc-core:1.66.0")
+    implementation("io.grpc:grpc-kotlin-stub:1.4.1")
+    implementation("io.grpc:grpc-protobuf:1.66.0")
+    implementation("com.google.protobuf:protobuf-java:4.28.0-RC2")
+
     testImplementation(kotlin("test"))
 }
 
@@ -26,6 +34,38 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(17)
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir("${projectDir.parent}/protos")
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.28.0-RC2"
+    }
+    plugins {
+        id("grpc") {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.66.0"
+        }
+        id("grpc-kt") {
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:1.4.1:jdk8@jar"
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                id("grpc-kt") {
+                    option("lite")
+                }
+                id("grpc") { }
+            }
+        }
+    }
 }
 
 publishing {
