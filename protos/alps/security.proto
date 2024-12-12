@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+// for java
+option java_multiple_files = true;
+option java_package = "com.yifeistudio.alps.security";
+option java_outer_classname = "AlpsSecurity";
+
+// for go
+option go_package = "github.com/yifeistudio-developer/alps/security";
+
+
+package alps;
+
+// 认证服务.
+service SecurityService {
+
+    /**
+    * 根据ACCESS_TOKEN获取账号概览信息
+    */
+    rpc GetAccountPrincipalsByAccessToken(CredentialRequest) returns (PrincipalsReply) {}
+
+    /**
+    * 根据TICKET获取账号概览信息
+    */
+    rpc GetAccountPrincipalsByTicket(CredentialRequest) returns (PrincipalsReply) {}
+
+}
+
+// 凭证
+message CredentialRequest {
+  string credential = 1;
+}
+
+// 账户概要信息
+message PrincipalsReply  {
+    
+    // 账号
+    string username = 1;
+
+    // 昵称
+    string nickname = 2;
+
+    // 头像
+    string avatar = 3;
+
+}
