@@ -21,11 +21,12 @@ repositories {
 }
 
 dependencies {
-    implementation("io.grpc:grpc-core:1.66.0")
+    implementation("io.grpc:grpc-core:1.69.0")
+    implementation("io.grpc:grpc-testing:1.69.0")
+    implementation("io.grpc:grpc-protobuf:1.69.0")
+    implementation("io.grpc:grpc-inprocess:1.69.0")
     implementation("io.grpc:grpc-kotlin-stub:1.4.1")
-    implementation("io.grpc:grpc-protobuf:1.66.0")
-    implementation("com.google.protobuf:protobuf-java:4.28.0-RC2")
-
+    implementation("com.google.protobuf:protobuf-java:4.29.1")
     testImplementation(kotlin("test"))
 }
 
@@ -46,11 +47,11 @@ sourceSets {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.28.0-RC2"
+        artifact = "com.google.protobuf:protoc:4.29.1"
     }
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:1.66.0"
+            artifact = "io.grpc:protoc-gen-grpc-java:1.69.0"
         }
         id("grpc-kt") {
             artifact = "io.grpc:protoc-gen-grpc-kotlin:1.4.1:jdk8@jar"
