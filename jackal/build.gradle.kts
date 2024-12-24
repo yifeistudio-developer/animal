@@ -76,8 +76,6 @@ publishing {
             val releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             val snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
             val isSnapshotVersion = version.toString().endsWith("SNAPSHOT")
-            println(ossrhPassword)
-            println(ossrhUsername)
             credentials {
                 username = ossrhUsername
                 password = ossrhPassword
